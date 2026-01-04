@@ -1,0 +1,73 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Todos{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="todo-header">
+    <h2>{{ user.username }}'s todos</h2>
+
+    <div class="todo-actions">
+      <input
+        type="text"
+        class="todo-search"
+        placeholder="Search todos..."
+        data-todo-search
+      />
+      <a href="{% url 'todo_create' %}" class="btn-primary" style="width:auto;">
+        New todo
+      </a>
+    </div>
+  </div>
+
+  {% if todos %}
+  <ul class="todo-list">
+    {% for todo in todos %}
+    <li
+      class="todo-item{% if todo.is_completed %} completed{% endif %}"
+      data-todo-item
+      data-todo-title="{{ todo.title }}"
+      data-todo-desc="{{ todo.description|default_if_none:'' }}"
+    >
+      <div class="todo-main">
+        <div class="todo-title">
+          <input
+            type="checkbox"
+            {% if todo.is_completed %}checked{% endif %}
+            data-todo-complete
+          />
+          {{ todo.title }}
+        </div>
+        <div class="todo-meta">
+          Created at: {{ todo.created_at|date:"Y/m/d H:i" }}
+          {% if todo.is_completed %}
+          · Completed
+          {% else %}
+          · In progress
+          {% endif %}
+        </div>
+        {% if todo.description %}
+        <div class="todo-description">
+          {{ todo.description|linebreaksbr }}
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="todo-buttons">
+        <a href="{% url 'todo_update' todo.pk %}">Edit</a>
+        <form
+          action="{% url 'todo_delete' todo.pk %}"
+          method="post"
+          style="display:inline;"
+        >
+          {% csrf_token %}
+          <button type="submit" class="btn-danger">Delete</button>
+        </form>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p style="color: var(--muted);">You do not have any todos yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

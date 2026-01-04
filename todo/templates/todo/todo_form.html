@@ -1,0 +1,48 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Todo{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h2>{% if object %}Edit todo{% else %}New todo{% endif %}</h2>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    <div class="form-floating">
+      {{ form.title }}
+      <label for="{{ form.title.id_for_label }}">Title</label>
+      {% if form.title.errors %}
+      <div class="text-danger">
+        {% for error in form.title.errors %}{{ error }}{% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="form-floating">
+      {{ form.description }}
+      <label for="{{ form.description.id_for_label }}">Description</label>
+      {% if form.description.errors %}
+      <div class="text-danger">
+        {% for error in form.description.errors %}{{ error }}{% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <div style="margin-bottom: 16px;">
+      <label>
+        {{ form.is_completed }}
+        Completed
+      </label>
+      {% if form.is_completed.errors %}
+      <div class="text-danger">
+        {% for error in form.is_completed.errors %}{{ error }}{% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="btn-primary">
+      Save
+    </button>
+  </form>
+</div>
+{% endblock %}
