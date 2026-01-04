@@ -17,5 +17,5 @@ COPY . /app/
 
 EXPOSE 8000
 
-# 8. اجرای مایگریشن و بعد runserver
+
 CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
