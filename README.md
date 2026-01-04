@@ -22,8 +22,8 @@ Auth (login / signup) is on the landing page. All views are class-based.
 ## Setup
 
 ```bash
-git clone https://github.com/rza0x/django-dark-todo.git
-cd django-dark-todo
+git clone https://github.com/rza0x/django-todo-core.git
+cd django-todo-core
 
 python -m venv venv
 source venv/bin/activate  # on Windows: venv\Scripts\activate
